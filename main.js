@@ -48,7 +48,18 @@ window.addEventListener('resize', () => {
 	sizes.height = window.innerHeight
 	camera.aspect = sizes.width / sizes.height
 	camera.updateProjectionMatrix()
+
 	renderer.setSize(sizes.width, sizes.height)
+	renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+	renderer.render(scene, camera)
+})
+
+window.addEventListener('dblclick', () => {
+	if (document.fullscreenElement) {
+		document.exitFullscreen()
+	} else {
+		canvas.requestFullscreen()
+	}
 })
 
 const loop = () => {
@@ -76,7 +87,7 @@ window.addEventListener('mousemove', e => {
 			150,
 		]
 		let newColor = new THREE.Color(`rgb(${rgb.join(',')})`)
-		gsap.to(mash.material.color, {
+		gsap.to(mesh.material.color, {
 			r: newColor.r,
 			g: newColor.g,
 			b: newColor.b,
